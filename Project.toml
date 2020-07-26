@@ -1,12 +1,14 @@
 name = "libhelfem_jll"
 uuid = "e795dbb4-5d3b-534d-89bd-7ff5a0f64a00"
-version = "0.0.1-alpha1+0"
+version = "0.0.1-alpha2+0"
 
 [deps]
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 armadillo_jll = "0631256a-41da-5d69-bb72-795e0d5510ec"
+libcxxwrap_julia_jll = "3eaa8342-bff7-56a5-9981-c04077f7cee7"
 Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [compat]
 julia = "1.0"
 armadillo_jll = "=9.850.1"
+libcxxwrap_julia_jll = "=0.8.0"

@@ -1,0 +1,12 @@
+name = "libhelfem_jll"
+uuid = "e795dbb4-5d3b-534d-89bd-7ff5a0f64a00"
+version = "0.0.1-alpha1+0"
+
+[deps]
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+armadillo_jll = "0631256a-41da-5d69-bb72-795e0d5510ec"
+Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+
+[compat]
+julia = "1.0"
+armadillo_jll = "=9.850"

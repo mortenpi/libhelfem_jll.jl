@@ -1,0 +1,10 @@
+[submodule "libhelfem"]
+	path = libhelfem
+	url = git@github.com:mortenpi/libhelfem.git
+	branch = mp/cmake
+[submodule "dev/BinaryBuilder.jl"]
+	path = dev/BinaryBuilder
+	url = git@github.com:mortenpi/BinaryBuilder.jl.git
+[submodule "dev/BinaryBuilderBase"]
+	path = dev/BinaryBuilderBase
+	url = https://github.com/JuliaPackaging/BinaryBuilderBase.jl.git

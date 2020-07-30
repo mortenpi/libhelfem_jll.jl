@@ -1,3 +1,17 @@
+# Modes:
+#
+# * julia --project build_tarballs.jl --verbose --devdir=dev --deploy=local
+#   Non-interactive local build
+#
+# * julia --project --color=yes build_tarballs.jl --debug --verbose --deploy="mortenpi/libhelfem_jll.jl"
+#   Deploy to GitHub
+#
+# * julia --project -i build_tarballs.jl
+#   Interactive mode, call build_helfem() to run the full local build.
+#
+# * julia --project -i -e'using Revise; includet("build_tarballs.jl")'
+#   Interactive mode, with Revise also called on the main file.
+
 if isinteractive()
     using Revise
 end
@@ -41,60 +55,15 @@ dependencies = [
     Dependency(PackageSpec(name = "armadillo_jll", version = "9.850.1")),
 ]
 
+build_helfem() = build_helfem(split("--verbose --devdir=dev --deploy=local x86_64-linux-gnu"))
+function build_helfem(args)
+    build_tarballs(args, name, version, sources, script, platforms, products, dependencies;
+        preferred_gcc_version = v"7.1.0"
+    )
+end
+
 if isinteractive()
-    @info "Running is internative mode (-i passed). Skipping build_tarballs()"
+    @info "Running is internative mode (-i passed). Skipping build_tarballs(), run build_helfem()"
 else
-    build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies;
-        preferred_gcc_version = v"7.1.0"
-    )
-end
-
-function helfem_build_tarballs()
-    ARGS = split("--verbose x86_64-linux-gnu")
-    build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies;
-        preferred_gcc_version = v"7.1.0"
-    )
-end
-
-function helfem_export_json()
-    ARGS = split("--verbose --meta-json x86_64-linux-gnu")
-    pipe = Pipe()
-    Base.link_pipe!(pipe; reader_supports_async = true, writer_supports_async = true)
-    redirect_stdout(pipe.in) do
-        build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies;
-            preferred_gcc_version = v"7.1.0"
-        )
-    end
-    s = String(readavailable(pipe))
-    close(pipe)
-    # @info "Writing to foo.json"
-    # open("foo.json", "w") do io
-    #     write(io, s)
-    # end
-    return s
-end
-
-function helfem_build_jll(json::AbstractString)
-    buff = IOBuffer(strip(json))
-    objs = []
-    while !eof(buff)
-        push!(objs, BinaryBuilder.JSON.parse(buff))
-    end
-    json_obj = objs[1]
-
-    @info "JSON information" json_obj
-
-    BinaryBuilder.cleanup_merged_object!(json_obj)
-    json_obj["dependencies"] = Dependency[dep for dep in json_obj["dependencies"] if !isa(dep, BuildDependency)]
-    @info "Calling BinaryBuilder.rebuild_jll_package"
-    BinaryBuilder.rebuild_jll_package(
-        json_obj, download_dir="products", upload_prefix="mortenpi/libhelfem-cxxwrap",
-        code_dir = joinpath(@__DIR__, "dev", "$(json_obj["name"])_jll")
-    )
-end
-
-function build_helfem()
-    helfem_build_tarballs()
-    json = helfem_export_json()
-    helfem_build_jll(json)
+    build_helfem(ARGS)
 end

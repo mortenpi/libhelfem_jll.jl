@@ -21,22 +21,23 @@ name = "libhelfem"
 version = v"0.0.1-alpha4"
 sources = [
     DirectorySource("./src"),
-    DirectorySource("./libhelfem", target="libhelfem"),
+    DirectorySource("./HelFEM", target="HelFEM"),
 ]
 
 script = raw"""
 pwd
-ls -Alh . ${WORKSPACE}/srcdir/libhelfem
+ls -Alh . ${WORKSPACE}/srcdir/HelFEM
 # Compile libhelfem as a static library
-cd ${WORKSPACE}/srcdir/libhelfem
-cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-make -j${nproc}
-make install
+cd ${WORKSPACE}/srcdir/HelFEM
+cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON -B build/ -S .
+make -C build/ -j${nproc} helfem
+make -C build/ install
+ls -Alh $prefix/*
 # Compile the CxxWrap wrapper as a shared library
 cd ${WORKSPACE}/srcdir
-cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release
-make -j${nproc}
-make install
+cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -B build/ -S .
+make -C build/ -j${nproc}
+make -C build/ install
 """
 
 #platforms = supported_platforms()

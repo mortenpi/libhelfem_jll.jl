@@ -4,26 +4,6 @@
 
 #include <helfem.h>
 
-std::string helfem_version() {
-    return "vX.Y.Z";
-}
-
-void helfem_verbose(bool verbose) {
-    if(verbose) {
-        std::cout << "Setting HelFEM library to verbose mode." << std::endl;
-    }
-    //helfem::verbose = verbose;
-}
-
-arma::vec printing_test_function(int n) {
-    arma::vec v(n);
-    for(int i=0; i < n; i++) {
-        v[i] = i*i;
-    }
-    std::cout << v << std::endl;
-    return v;
-}
-
 auto helfem_basis(int nnodes, int nelem, int primbas, double rmax, int igrid, double zexp, int nquad) {
     helfem::polynomial_basis::PolynomialBasis * poly = helfem::polynomial_basis::get_basis(primbas, nnodes);
     if(nquad <= 0) nquad = 5 * poly->get_nbf();

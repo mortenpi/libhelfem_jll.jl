@@ -18,7 +18,7 @@ end
 using BinaryBuilder, Pkg
 
 name = "libhelfem"
-version = v"0.0.1-alpha4"
+version = v"0.0.1-alpha5"
 sources = [
     DirectorySource("./src"),
     DirectorySource("./HelFEM", target="HelFEM"),

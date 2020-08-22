@@ -3,6 +3,8 @@ export libhelfem
 
 using libcxxwrap_julia_jll
 using armadillo_jll
+using GSL_jll
+using OpenBLAS_jll
 ## Global variables
 PATH = ""
 LIBPATH = ""
@@ -23,23 +25,28 @@ libhelfem_handle = C_NULL
 const libhelfem = "libhelfem-cxxwrap.so"
 
 
-# Initialize PATH and LIBPATH environment variable listings.
-# From the list of our dependencies, generate a tuple of all the PATH and LIBPATH lists,
-# then append them to our own.
-foreach(p -> append!(PATH_list, p), (libcxxwrap_julia_jll.PATH_list, armadillo_jll.PATH_list,))
-foreach(p -> append!(LIBPATH_list, p), (libcxxwrap_julia_jll.LIBPATH_list, armadillo_jll.LIBPATH_list,))
+# Inform that the wrapper is available for this platform
+wrapper_available = true
+
 """
 Open all libraries
 """
 function __init__()
-    global artifact_dir = abspath(artifact"libhelfem")
+    # This either calls `@artifact_str()`, or returns a constant string if we're overridden.
+    global artifact_dir = find_artifact_dir()
 
     global PATH_list, LIBPATH_list
+    # Initialize PATH and LIBPATH environment variable listings
+    # From the list of our dependencies, generate a tuple of all the PATH and LIBPATH lists,
+    # then append them to our own.
+    foreach(p -> append!(PATH_list, p), (libcxxwrap_julia_jll.PATH_list, armadillo_jll.PATH_list, GSL_jll.PATH_list, OpenBLAS_jll.PATH_list,))
+    foreach(p -> append!(LIBPATH_list, p), (libcxxwrap_julia_jll.LIBPATH_list, armadillo_jll.LIBPATH_list, GSL_jll.LIBPATH_list, OpenBLAS_jll.LIBPATH_list,))
+
     global libhelfem_path = normpath(joinpath(artifact_dir, libhelfem_splitpath...))
 
     # Manually `dlopen()` this right now so that future invocations
     # of `ccall` with its `SONAME` will find this path immediately.
-    global libhelfem_handle = dlopen(libhelfem_path)
+    global libhelfem_handle = dlopen(libhelfem_path, RTLD_LAZY | RTLD_DEEPBIND)
     push!(LIBPATH_list, dirname(libhelfem_path))
 
     # Filter out duplicate and empty entries in our PATH and LIBPATH entries

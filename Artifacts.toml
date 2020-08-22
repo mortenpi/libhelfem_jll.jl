@@ -11,10 +11,10 @@ os = "linux"
 [[libhelfem]]
 arch = "x86_64"
 cxxstring_abi = "cxx11"
-git-tree-sha1 = "05dc192d94529e9eb7e63c3a76e6fb5ef8067915"
+git-tree-sha1 = "678b2363c5e03bb92a0c7a0ccab10c28fb87a8ac"
 libc = "glibc"
 os = "linux"
 
     [[libhelfem.download]]
-    sha256 = "dc555202a68b918a0205af65b66539505b82b05cb1b9802157327eed0cc360b2"
-    url = "https://github.com/mortenpi/libhelfem_jll.jl/releases/download/libhelfem-v0.0.1-alpha4+0/libhelfem.v0.0.1-alpha4.x86_64-linux-gnu-cxx11.tar.gz"
+    sha256 = "60bef29ca47586c12c838be34faa1d6ae36a7e357dac00c51e698cac1a2db42a"
+    url = "https://github.com/mortenpi/libhelfem_jll.jl/releases/download/libhelfem-v0.0.1-alpha5+0/libhelfem.v0.0.1-alpha5.x86_64-linux-gnu-cxx11.tar.gz"

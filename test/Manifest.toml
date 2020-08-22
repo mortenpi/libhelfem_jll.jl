@@ -19,6 +19,18 @@ version = "0.11.0"
 deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
+[[GSL_jll]]
+deps = ["Libdl", "Pkg"]
+git-tree-sha1 = "5bfc132c5162c415be2f49737b95c858f0b70a4c"
+uuid = "1b77fbbe-d8ee-58f0-85f9-836ddc23a7a4"
+version = "2.6.0+3"
+
+[[HelFEM]]
+deps = ["CxxWrap", "Libdl", "libhelfem_jll"]
+path = "../dev/HelFEM.jl"
+uuid = "c0bd3504-f9fd-49c8-81ec-6baa9ade81f3"
+version = "0.1.0"
+
 [[InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
@@ -94,7 +106,7 @@ uuid = "3eaa8342-bff7-56a5-9981-c04077f7cee7"
 version = "0.8.0+0"
 
 [[libhelfem_jll]]
-deps = ["Libdl", "Pkg", "armadillo_jll", "libcxxwrap_julia_jll"]
+deps = ["GSL_jll", "Libdl", "OpenBLAS_jll", "Pkg", "armadillo_jll", "libcxxwrap_julia_jll"]
 path = "../dev/libhelfem_jll"
 uuid = "e795dbb4-5d3b-534d-89bd-7ff5a0f64a00"
-version = "0.0.1-alpha3+0"
+version = "0.0.1-alpha4+0"

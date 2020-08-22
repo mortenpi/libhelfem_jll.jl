@@ -4,3 +4,6 @@
 [submodule "HelFEM"]
 	path = HelFEM
 	url = git@github.com:susilehtola/HelFEM.git
+[submodule "HelFEM.jl"]
+	path = dev/HelFEM.jl
+	url = git@github.com:mortenpi/HelFEM.jl.git

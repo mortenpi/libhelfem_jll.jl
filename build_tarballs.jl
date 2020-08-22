@@ -25,6 +25,8 @@ sources = [
 ]
 
 script = raw"""
+cp -v ${WORKSPACE}/srcdir/CMake.system ${WORKSPACE}/srcdir/HelFEM/CMake.system
+cat ${WORKSPACE}/srcdir/HelFEM/CMake.system
 pwd
 ls -Alh . ${WORKSPACE}/srcdir/HelFEM
 # Compile libhelfem as a static library
@@ -54,6 +56,8 @@ dependencies = [
     BuildDependency(PackageSpec(name="Julia_jll",version=v"1.4.1")),
     Dependency(PackageSpec(name = "libcxxwrap_julia_jll", version = "0.8.0")),
     Dependency(PackageSpec(name = "armadillo_jll", version = "9.850.1")),
+    Dependency(PackageSpec(name = "GSL_jll", version = "2.6.0")),
+    Dependency(PackageSpec(name = "OpenBLAS_jll", version = "0.3.9")),
 ]
 
 build_helfem() = build_helfem(split("--verbose --devdir=dev --deploy=local x86_64-linux-gnu"))

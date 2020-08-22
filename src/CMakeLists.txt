@@ -19,6 +19,8 @@ if(NOT (${ARMADILLO_VERSION_MAJOR} EQUAL "9"))
     message(FATAL_ERROR "Invalid Armadillo version, expected 9.")
 endif()
 
+include("CMake.system")
+
 # RPATH handling
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib;${JlCxx_location};${HDF5}/lib;${OPENBLAS}/lib;${GSL}/lib")
 set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)

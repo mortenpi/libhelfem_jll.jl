@@ -33,10 +33,10 @@ auto helfem_basis(int nnodes, int nelem, int primbas, double rmax, int igrid, do
 
 namespace jlcxx
 {
-  // template<> struct SuperType<helfem::modelpotential::PointNucleus> { typedef helfem::modelpotential::ModelPotential type; };
-  // template<> struct SuperType<helfem::modelpotential::GaussianNucleus> { typedef helfem::modelpotential::ModelPotential type; };
-  // template<> struct SuperType<helfem::modelpotential::SphericalNucleus> { typedef helfem::modelpotential::ModelPotential type; };
-  // template<> struct SuperType<helfem::modelpotential::HollowNucleus> { typedef helfem::modelpotential::ModelPotential type; };
+  template<> struct SuperType<helfem::modelpotential::PointNucleus> { typedef helfem::modelpotential::ModelPotential type; };
+  template<> struct SuperType<helfem::modelpotential::GaussianNucleus> { typedef helfem::modelpotential::ModelPotential type; };
+  template<> struct SuperType<helfem::modelpotential::SphericalNucleus> { typedef helfem::modelpotential::ModelPotential type; };
+  template<> struct SuperType<helfem::modelpotential::HollowNucleus> { typedef helfem::modelpotential::ModelPotential type; };
 }
 
 JLCXX_MODULE define_julia_module(jlcxx::Module& mod)
@@ -54,18 +54,18 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& mod)
     mod.method("verbose", &helfem::set_verbosity);
 
     mod.method("get_grid", &helfem::utils::get_grid);
-    // mod.method("form_Sinvh", &helfem::scf::form_Sinvh);
+    mod.method("invh", &helfem::utils::invh);
 
     mod.add_type<helfem::modelpotential::ModelPotential>("ModelPotential")
         .method("V", static_cast<double (helfem::modelpotential::ModelPotential::*)(double) const>(&helfem::modelpotential::ModelPotential::V));
-    // mod.add_type<helfem::modelpotential::PointNucleus>("PointNucleus", jlcxx::julia_base_type<helfem::modelpotential::ModelPotential>())
-    //     .constructor<int>();
-    // mod.add_type<helfem::modelpotential::GaussianNucleus>("GaussianNucleus", jlcxx::julia_base_type<helfem::modelpotential::ModelPotential>())
-    //     .constructor<int, double>();
-    // mod.add_type<helfem::modelpotential::SphericalNucleus>("SphericalNucleus", jlcxx::julia_base_type<helfem::modelpotential::ModelPotential>())
-    //     .constructor<int, double>();
-    // mod.add_type<helfem::modelpotential::HollowNucleus>("HollowNucleus", jlcxx::julia_base_type<helfem::modelpotential::ModelPotential>())
-    //     .constructor<int, double>();
+    mod.add_type<helfem::modelpotential::PointNucleus>("PointNucleus", jlcxx::julia_base_type<helfem::modelpotential::ModelPotential>())
+        .constructor<int>();
+    mod.add_type<helfem::modelpotential::GaussianNucleus>("GaussianNucleus", jlcxx::julia_base_type<helfem::modelpotential::ModelPotential>())
+        .constructor<int, double>();
+    mod.add_type<helfem::modelpotential::SphericalNucleus>("SphericalNucleus", jlcxx::julia_base_type<helfem::modelpotential::ModelPotential>())
+        .constructor<int, double>();
+    mod.add_type<helfem::modelpotential::HollowNucleus>("HollowNucleus", jlcxx::julia_base_type<helfem::modelpotential::ModelPotential>())
+        .constructor<int, double>();
 
     mod.add_type<helfem::polynomial_basis::PolynomialBasis>("PolynomialBasis")
          .method("get_nbf", &helfem::polynomial_basis::PolynomialBasis::get_nbf)

@@ -18,7 +18,7 @@ end
 using BinaryBuilder, Pkg
 
 name = "libhelfem"
-version = v"0.0.1-alpha6"
+version = v"0.0.1-alpha7"
 sources = [
     DirectorySource("./src"),
     # The ArchiveSource is replaced with a DirectorySource if a local clone of the HelFEM
@@ -35,7 +35,7 @@ script = raw"""
 cp -v ${WORKSPACE}/srcdir/CMake.system ${WORKSPACE}/srcdir/HelFEM-0.0.1/CMake.system
 # Compile libhelfem as a static library
 cd ${WORKSPACE}/srcdir/HelFEM-0.0.1
-cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON -B build/ -S .
+cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DUSE_OPENMP=OFF -B build/ -S .
 make -C build/ -j${nproc} helfem
 make -C build/ install
 # Compile the CxxWrap wrapper as a shared library

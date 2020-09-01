@@ -1,3 +1,6 @@
 build/
 products/
 dev/libhelfem_jll
+
+# Don't track if there is a custom HelFEM clone
+/HelFEM/

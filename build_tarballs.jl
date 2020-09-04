@@ -18,23 +18,32 @@ end
 using BinaryBuilder, Pkg
 
 name = "libhelfem"
-version = v"0.0.1-alpha7"
+version = v"0.0.2-alpha1"
 sources = [
     DirectorySource("./src"),
     # The ArchiveSource is replaced with a DirectorySource if a local clone of the HelFEM
     # repository is used.
-    if isdir(joinpath(@__DIR__, "HelFEM"))
+    if haskey(ENV, "USE_LOCAL_HELFEM")
         @warn "Using local clone of HelFEM"
-        DirectorySource("./HelFEM", target="HelFEM-0.0.1")
+        @assert isdir(joinpath(@__DIR__, "HelFEM"))
+        DirectorySource("./HelFEM", target="HelFEM")
     else
-        ArchiveSource("https://github.com/mortenpi/HelFEM/archive/v0.0.1.tar.gz", "266c21ee4a13722a26d7db6112b0d16b2a9b42edb2bae041b6e3b4213fe8738b")
+        ArchiveSource(
+            "https://github.com/mortenpi/HelFEM/archive/v$version.tar.gz",
+            "3f1da9f1ef5f20d4c8c31eed28598f6119e64497b2102110205c07a9e01a6a70"
+        )
     end,
 ]
 
+# $(:version) is a special placeholder string that gets replaced with $version below.
+# This needs to be done by hand because we're using raw"" string literals here.
 script = raw"""
-cp -v ${WORKSPACE}/srcdir/CMake.system ${WORKSPACE}/srcdir/HelFEM-0.0.1/CMake.system
+if [ -d "${WORKSPACE}/srcdir/HelFEM-$(:version)" ]; then
+    mv "${WORKSPACE}/srcdir/HelFEM-$(:version)" "${WORKSPACE}/srcdir/HelFEM"
+fi
+cp -v ${WORKSPACE}/srcdir/CMake.system ${WORKSPACE}/srcdir/HelFEM/CMake.system
 # Compile libhelfem as a static library
-cd ${WORKSPACE}/srcdir/HelFEM-0.0.1
+cd ${WORKSPACE}/srcdir/HelFEM
 cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DUSE_OPENMP=OFF -B build/ -S .
 make -C build/ -j${nproc} helfem
 make -C build/ install
@@ -44,6 +53,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLC
 make -C build/ -j${nproc}
 make -C build/ install
 """
+script = replace(script, raw"$(:version)" => "$version")
 
 #platforms = supported_platforms()
 platforms = [

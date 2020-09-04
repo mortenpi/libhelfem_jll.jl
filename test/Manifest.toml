@@ -109,4 +109,4 @@ version = "0.8.0+0"
 deps = ["GSL_jll", "Libdl", "OpenBLAS_jll", "Pkg", "armadillo_jll", "libcxxwrap_julia_jll"]
 path = "../dev/libhelfem_jll"
 uuid = "e795dbb4-5d3b-534d-89bd-7ff5a0f64a00"
-version = "0.0.1-alpha4+0"
+version = "0.0.2-alpha1+0"

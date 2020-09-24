@@ -12,14 +12,12 @@
 #
 # * julia --project -i -e'using Revise; includet("build_tarballs.jl")'
 #   Interactive mode, with Revise also called on the main file.
-
-if isinteractive()
-    using Revise
-end
+#
 using BinaryBuilder, Pkg
 
 name = "libhelfem"
-version = v"0.0.2-alpha2"
+version = v"0.0.2-alpha1+2"
+HelFEM_version = VersionNumber(version.major, version.minor, version.patch, version.prerelease)
 sources = [
     DirectorySource("./src"),
     # The ArchiveSource is replaced with a DirectorySource if a local clone of the HelFEM
@@ -30,7 +28,7 @@ sources = [
         DirectorySource("./HelFEM", target="HelFEM")
     else
         ArchiveSource(
-            "https://github.com/mortenpi/HelFEM/archive/v$version.tar.gz",
+            "https://github.com/mortenpi/HelFEM/archive/v$(HelFEM_version).tar.gz",
             "3f1da9f1ef5f20d4c8c31eed28598f6119e64497b2102110205c07a9e01a6a70"
         )
     end,
@@ -77,7 +75,7 @@ cmake \
 make -C build/ -j${nproc}
 make -C build/ install
 """
-script = replace(script, raw"$(:version)" => "$version")
+script = replace(script, raw"$(:version)" => "$HelFEM_version")
 
 # These are the platforms the libcxxwrap_julia_jll is built on.
 platforms = [

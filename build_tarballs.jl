@@ -19,7 +19,7 @@ end
 using BinaryBuilder, Pkg
 
 name = "libhelfem"
-version = v"0.0.2-alpha1"
+version = v"0.0.2-alpha2"
 sources = [
     DirectorySource("./src"),
     # The ArchiveSource is replaced with a DirectorySource if a local clone of the HelFEM

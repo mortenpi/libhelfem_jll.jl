@@ -51,7 +51,7 @@ else
 
     """
         dev_jll()
-    
+
     Check this package out to the dev package directory (usually ~/.julia/dev),
     copying the artifact over to a local `override` directory, allowing package
     developers to experiment with a locally-built binary.

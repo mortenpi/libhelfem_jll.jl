@@ -49,16 +49,6 @@ os = "macos"
 [[libhelfem]]
 arch = "x86_64"
 cxxstring_abi = "cxx11"
-git-tree-sha1 = "ac0f8b76701f9a0468bbae6dd33214f4dd743d7e"
-libc = "glibc"
-os = "linux"
-
-    [[libhelfem.download]]
-    sha256 = "0e4d6222516840eca854b175ce5b25a41e23eec861a3b47dec466f03707d1a26"
-    url = "https://github.com/mortenpi/libhelfem_jll.jl/releases/download/libhelfem-v0.0.2-alpha1+0/libhelfem.v0.0.2-alpha1.x86_64-linux-gnu-cxx11.tar.gz"
-[[libhelfem]]
-arch = "x86_64"
-cxxstring_abi = "cxx11"
 git-tree-sha1 = "1d789924f2f09591eec2a6ffd66bb61cf05745f5"
 os = "freebsd"
 
@@ -74,3 +64,13 @@ os = "windows"
     [[libhelfem.download]]
     sha256 = "5d4f99b666be475135b7814cc78b0c09a4212df3fb7cf5fbd1fffc450a4d3eb3"
     url = "https://github.com/mortenpi/libhelfem_jll.jl/releases/download/libhelfem-v0.0.2-alpha1+0/libhelfem.v0.0.2-alpha1.x86_64-w64-mingw32-cxx11.tar.gz"
+[[libhelfem]]
+arch = "x86_64"
+cxxstring_abi = "cxx11"
+git-tree-sha1 = "c0f05d6e478a11686c946a90d8289165da1ded3a"
+libc = "glibc"
+os = "linux"
+
+    [[libhelfem.download]]
+    sha256 = "5eceeaed676cf733e0a27f54f1b55969a29446beb28231184c8e6f5d48041975"
+    url = "https://github.com/mortenpi/libhelfem_jll.jl/releases/download/libhelfem-v0.0.2-alpha1+1/libhelfem.v0.0.2-alpha1.x86_64-linux-gnu-cxx11.tar.gz"
